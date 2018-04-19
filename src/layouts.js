@@ -1,7 +1,11 @@
-var cy_headless = cytoscape({
-	headless: true,
-	styleEnabled: true,
-});
+var cy_headless; 
+
+var createHeadlessInstance = function(cytoscape) {
+	cy_headless = cytoscape({
+		headless: true,
+		styleEnabled: true,
+	});
+};
 
 var applyMergedLayout = function (cy, otherCy) {
 	let eles = cy.elements();
@@ -81,4 +85,4 @@ let applyUnnamedLayout = function(cy, otherCy) {
 	});
 };
 
-export {applyMergedLayout, applyUnnamedLayout};
+export {createHeadlessInstance, applyMergedLayout, applyUnnamedLayout};

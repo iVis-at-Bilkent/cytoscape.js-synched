@@ -1,11 +1,13 @@
 import './cose-bilkent-modification.js';
-import {applyMergedLayout, applyUnnamedLayout} from './layouts.js';
+import {createHeadlessInstance, applyMergedLayout, applyUnnamedLayout} from './layouts.js';
 const getLayout = require('../cose-bilkent/src/Layout');
 var FDLayoutConstants = require('../cose-bilkent/src/Layout/FDLayoutConstants');
 
 // registers the extension on a cytoscape lib ref
 let register = function( cytoscape ){
 	if( !cytoscape ){ return; } // can't register if cytoscape unspecified
+
+	createHeadlessInstance(cytoscape);
 
 	let Layout = getLayout(cytoscape);
 	let orgPrototype = Layout.prototype;
