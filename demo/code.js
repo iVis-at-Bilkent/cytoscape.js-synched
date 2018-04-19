@@ -125,6 +125,10 @@ var cy2 = cytoscape({
   }
 });
 
+cy.on("synchedLayoutStopped", function() {
+	cy.fit(50); cy2.fit(50);
+});
+
 var api = cy.synchedLayout('get');
 
 let randomize = function() {

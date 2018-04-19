@@ -31,14 +31,9 @@ var applyMergedLayout = function (cy, otherCy) {
 			return {x: pos[ele.id()].x, y: pos[ele.id()].y}
 		});
 
-		cy.fit(50); otherCy.fit(50);
+		cy.trigger("synchedLayoutStopped");
+		otherCy.trigger("synchedLayoutStopped");
 
-		if (cy.zoom() > otherCy.zoom()){
-			cy.zoom(otherCy.zoom()); cy.pan(otherCy.pan());
-		}
-		else{
-			otherCy.zoom(cy.zoom()); otherCy.pan(cy.pan());
-		}
 	});
 };
 
@@ -81,6 +76,24 @@ let applyUnnamedLayout = function(cy, otherCy) {
 
 		cy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos}).run();
 		otherCy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos}).run();
+
+		let isLayoutStopped = false, isOtherLayoutStopped = false;
+
+		cy.one("layoutstop", function(){
+			isLayoutStopped = true;
+			if (isOtherLayoutStopped) {
+				cy.trigger("synchedLayoutStopped");
+				otherCy.trigger("synchedLayoutStopped");
+			}
+		});
+
+		otherCy.one("layoutstop", function(){
+			isOtherLayoutStopped = true;
+			if (isLayoutStopped) {
+				cy.trigger("synchedLayoutStopped");
+				otherCy.trigger("synchedLayoutStopped");
+			}
+		});
 
 	});
 };
