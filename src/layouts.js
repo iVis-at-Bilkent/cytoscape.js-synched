@@ -37,7 +37,7 @@ var applyMergedLayout = function (cy, otherCy) {
 	});
 };
 
-let applyUnnamedLayout = function(cy, otherCy) {
+let applyUnnamedLayout = function(cy, otherCy, excludedNodeMoveFactor) {
 	let eles = cy.elements();
 	let otherEles = otherCy.elements();
 	let commonEles = eles.intersection(otherEles);
@@ -74,8 +74,8 @@ let applyUnnamedLayout = function(cy, otherCy) {
 			}
 		});
 
-		cy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos}).run();
-		otherCy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos}).run();
+		cy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
+		otherCy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
 
 		let isLayoutStopped = false, isOtherLayoutStopped = false;
 

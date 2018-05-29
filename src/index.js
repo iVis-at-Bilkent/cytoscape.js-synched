@@ -31,6 +31,7 @@ let register = function( cytoscape ){
 	function _CoSELayout(_options) {
 		this.options = extend(defaults, _options);
 		new Layout(_options);
+		FDLayoutConstants.excludedNodeMoveFactor = _options.excludedNodeMoveFactor || 0;
 
 		if (_options.excludedNodes) {
 			FDLayoutConstants.EXCLUDED_NODES = _options.excludedNodes;

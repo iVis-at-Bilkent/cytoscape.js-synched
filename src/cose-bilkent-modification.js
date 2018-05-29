@@ -4,9 +4,6 @@ var IMath = require('../cose-bilkent/src/Layout/IMath');
 
 CoSENode.prototype.move = function ()
 {
-  if (FDLayoutConstants.EXCLUDED_NODES[this.id])
-    return;
-
   var layout = this.graphManager.getLayout();
   this.displacementX = layout.coolingFactor *
           (this.springForceX + this.repulsionForceX + this.gravitationForceX) / this.noOfChildren;
@@ -24,6 +21,11 @@ CoSENode.prototype.move = function ()
   {
     this.displacementY = layout.coolingFactor * layout.maxNodeDisplacement *
             IMath.sign(this.displacementY);
+  }
+
+  if (FDLayoutConstants.EXCLUDED_NODES[this.id]) {
+    this.displacementX *= FDLayoutConstants.excludedNodeMoveFactor;
+    this.displacementY *= FDLayoutConstants.excludedNodeMoveFactor;
   }
 
   // a simple node, just move it
