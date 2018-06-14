@@ -53,7 +53,8 @@ Plain HTML/JS has the extension registered for you automatically, because no `re
 ## API
 - `let api = cy.synchedLayout('get')`: get the extension instance
 - `api.applyMergedLayout(cy, cy2)`: apply merged layout
-- `api.applyUnnamedLayout(cy, cy2)`: apply unnamed layout
+- `api.applyInterLayedLayout(cy, cy2)`: apply Extended InterLayed layout
+- `api.applyExtendedInterLayedLayout(cy, cy2)`: apply InterLayed layout
 
 ## Build targets
 
