@@ -7,7 +7,7 @@ var createHeadlessInstance = function(cytoscape) {
 	});
 };
 
-var applyMergedLayout = function (cy, otherCy) {
+var applyAggregatedLayout = function (cy, otherCy) {
 	let eles = cy.elements();
 	let otherEles = otherCy.elements();
 	let all_eles = eles.union(otherEles);
@@ -74,8 +74,8 @@ let applyInterLayedLayout = function(cy, otherCy, excludedNodeMoveFactor) {
 			}
 		});
 
-		cy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
-		otherCy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
+		cy.layout({name: "cytoscape.js-synched",  tile: false, randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
+		otherCy.layout({name: "cytoscape.js-synched", tile: false,  randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
 
 		let isLayoutStopped = false, isOtherLayoutStopped = false;
 
@@ -112,7 +112,11 @@ let applyExtendedInterLayedLayout = function(cy, otherCy, excludedNodeMoveFactor
 
 	let collection = cy.collection();
 	collection = collection.add(commonEles);
-	collection = collection.add(commonEles.neighborhood());
+
+	commonEles.forEach(function(ele) {
+		collection = collection.add(cy.getElementById(ele.id()).neighborhood());
+		collection = collection.add(otherCy.getElementById(ele.id()).neighborhood());
+	});
 
 	cy_headless.elements().remove();
 	cy_headless.add(collection);
@@ -140,8 +144,8 @@ let applyExtendedInterLayedLayout = function(cy, otherCy, excludedNodeMoveFactor
 			}
 		});
 
-		cy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
-		otherCy.layout({name: "cytoscape.js-synched",  randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
+		cy.layout({name: "cytoscape.js-synched",  tile: false, randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
+		otherCy.layout({name: "cytoscape.js-synched",  tile: false, randomize: false, excludedNodes: pos, excludedNodeMoveFactor: excludedNodeMoveFactor}).run();
 
 		let isLayoutStopped = false, isOtherLayoutStopped = false;
 
@@ -163,4 +167,4 @@ let applyExtendedInterLayedLayout = function(cy, otherCy, excludedNodeMoveFactor
 
 	});
 };
-export {createHeadlessInstance, applyMergedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout};
+export {createHeadlessInstance, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout};
