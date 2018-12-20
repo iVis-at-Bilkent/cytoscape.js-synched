@@ -1,5 +1,5 @@
 import './cose-bilkent-modification.js';
-import {createHeadlessInstance, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout} from './layouts.js';
+import {createHeadlessInstance, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout, applyIterativeLayout} from './layouts.js';
 const getLayout = require('../cose-bilkent/src/Layout');
 var FDLayoutConstants = require('../cose-bilkent/src/Layout/FDLayoutConstants');
 
@@ -49,6 +49,7 @@ let register = function( cytoscape ){
 		api.applyAggregatedLayout = applyAggregatedLayout;
 		api.applyInterLayedLayout = applyInterLayedLayout;
 		api.applyExtendedInterLayedLayout = applyExtendedInterLayedLayout;
+		api.applyIterativeLayout = applyIterativeLayout;
 
 		return api;
 	});

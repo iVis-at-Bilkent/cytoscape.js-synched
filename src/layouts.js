@@ -167,4 +167,46 @@ let applyExtendedInterLayedLayout = function(cy, otherCy, excludedNodeMoveFactor
 
 	});
 };
-export {createHeadlessInstance, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout};
+
+var applyIterativeLayout = function(cy, otherCy, maxIter) {
+	var counter = 0;
+	maxIter = 2 * maxIter;
+
+	otherCy.on('layoutstop', function() {
+		if (counter < maxIter) {
+			cy.nodes().positions(node => {
+				let otherNode = otherCy.getElementById(node.id());
+
+				if (otherNode.length > 0) {
+					return otherNode.position();
+				} else {
+					return node.position();
+				}
+			});
+
+			cy.layout({name: "cytoscape.js-synched",  tile: false,  randomize: false, numIter: 1}).run();
+			counter++;
+		}
+	});
+
+	cy.on('layoutstop', function() {
+		if (counter < maxIter) {
+			otherCy.nodes().positions(node => {
+				let otherNode = cy.getElementById(node.id());
+
+				if (otherNode.length > 0) {
+					return otherNode.position();
+				} else {
+					return node.position();
+				}
+			});
+
+			otherCy.layout({name: "cytoscape.js-synched",  tile: false,  randomize: false, numIter: 1}).run();
+			counter++;
+		}
+	});
+
+	cy.layout({name: 'random'}).run();
+};
+
+export {createHeadlessInstance, applyAggregatedLayout, applyInterLayedLayout, applyExtendedInterLayedLayout, applyIterativeLayout};

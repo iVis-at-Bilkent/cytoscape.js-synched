@@ -8,7 +8,7 @@
     "email": ""
   },
   "scripts": {
-    "postpublish": "run-s gh-pages:deploy", 
+    "postpublish": "run-s gh-pages:deploy",
     "gh-pages:deploy": "gh-pages -d .",
     "copyright": "update license",
     "lint": "eslint src",
