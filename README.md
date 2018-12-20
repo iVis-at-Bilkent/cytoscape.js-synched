@@ -55,6 +55,7 @@ Plain HTML/JS has the extension registered for you automatically, because no `re
 - `api.applyAggregatedLayout(cy, cy2)`: apply aggregated layout
 - `api.applyInterLayedLayout(cy, cy2)`: apply InterLayed layout
 - `api.applyExtendedInterLayedLayout(cy, cy2)`: apply Extended InterLayed layout
+- `api.applyIterativeLayout(cy, cy2, numIter)`: apply Converging Iterations layout
 
 ## Build targets
 
